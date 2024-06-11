@@ -1,0 +1,23 @@
+{
+  "name": "scandiweb/shop",
+  "description": "A simple eCommerce site for the Scandiweb test task.",
+  "type": "project",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Irakli",
+      "email": "ir.oboladze@gmail.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "App\\": "src/"
+    }
+  },
+  "minimum-stability": "stable",
+  "require": {
+    "webonyx/graphql-php": "^14.11",
+    "vlucas/phpdotenv": "^5.4",
+    "nikic/fast-route": "^1.3"
+  }
+}
