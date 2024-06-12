@@ -1,7 +1,9 @@
-import { ApolloClient, InMemoryCache } from "@apollo/client";
+import { ApolloClient, InMemoryCache, HttpLink } from "@apollo/client";
 
 const client = new ApolloClient({
-  uri: "http://localhost/scandiweb-backend/public/index.php/graphql", // Adjust this URL to your backend deployment URL
+  link: new HttpLink({
+    uri: "http://localhost/scandiweb/scandiweb-backend/public/index.php/graphql",
+  }),
   cache: new InMemoryCache(),
 });
 
