@@ -24,7 +24,7 @@
 }
 
 .out-of-stock {
-  color: rgba(0, 0, 0, 0.5);
+  color: red;
   position: absolute;
   top: 0;
   right: 0;
