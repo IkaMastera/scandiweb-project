@@ -1,5 +1,6 @@
 import React from "react";
 import { gql, useQuery } from "@apollo/client";
+import ProductCard from "./ProductCard";
 
 const GET_PRODUCTS = gql`
   query GetProducts {
@@ -10,6 +11,7 @@ const GET_PRODUCTS = gql`
       description
       in_stock
       brand
+      gallery
       prices {
         amount
         currency_label
@@ -26,22 +28,13 @@ const ProductList = () => {
   if (error) return <p>Error: {error.message}</p>;
 
   return (
-    <div>
+    <div className="product-list">
       {data.products.map((product) => (
-        <div key={product.id}>
-          <h2>{product.name}</h2>
-          <p>{product.description}</p>
-          <p>{product.in_stock ? "In Stock" : "Out of Stock"}</p>
-          <p>Brand: {product.brand}</p>
-          <div>
-            {product.prices.map((price, index) => (
-              <p key={index}>
-                {price.currency_symbol}
-                {price.amount} {price.currency_label}
-              </p>
-            ))}
-          </div>
-        </div>
+        <ProductCard
+          key={product.id}
+          product={product}
+          addToCart={(product) => console.log("Add to cart:", product)}
+        />
       ))}
     </div>
   );

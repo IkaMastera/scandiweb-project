@@ -2,6 +2,16 @@ import React from "react";
 import "./ProductCard.css";
 
 const ProductCard = ({ product, addToCart }) => {
+  if (
+    !product ||
+    !product.gallery ||
+    !product.gallery.length ||
+    !product.prices ||
+    !product.prices.length
+  ) {
+    return <div className="product-card">Product data is not available</div>;
+  }
+
   return (
     <div className="product-card">
       <img
@@ -16,7 +26,7 @@ const ProductCard = ({ product, addToCart }) => {
       </p>
       {product.in_stock ? (
         <button onClick={() => addToCart(product)} className="add-to-cart">
-          <img src="path/to/cart-icon.png" alt="Add to cart" />
+          <img src="/path/to/cart-icon.png" alt="Add to cart" />
         </button>
       ) : (
         <div className="out-of-stock">Out Of Stock</div>
