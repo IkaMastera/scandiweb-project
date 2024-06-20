@@ -2,20 +2,24 @@ import React from "react";
 import "./ProductCard.css";
 
 const ProductCard = ({ product, addToCart }) => {
-  if (
-    !product ||
-    !product.gallery ||
-    !product.gallery.length ||
-    !product.prices ||
-    !product.prices.length
-  ) {
-    return <div className="product-card">Product data is not available</div>;
+  let gallery = [];
+
+  // Try to parse the gallery JSON string into an array
+  try {
+    gallery = JSON.parse(product.gallery);
+  } catch (error) {
+    console.error("Failed to parse gallery JSON:", product.gallery);
+  }
+
+  if (!product || !gallery.length) {
+    console.error("Gallery data is missing for product:", product);
+    return <div>Product data is not available</div>;
   }
 
   return (
     <div className="product-card">
       <img
-        src={product.gallery[0]}
+        src={gallery[0]} // Display the first image
         alt={product.name}
         className="product-image"
       />

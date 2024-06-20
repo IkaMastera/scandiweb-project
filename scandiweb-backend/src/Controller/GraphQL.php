@@ -20,6 +20,7 @@ class GraphQL {
         try {
             $db = (new Database())->getConnection();
 
+            // Define types
             $categoryType = new ObjectType([
                 'name' => 'Category',
                 'fields' => [
@@ -58,6 +59,7 @@ class GraphQL {
                     'description' => Type::string(),
                     'category_id' => Type::id(),
                     'brand' => Type::string(),
+                    'gallery' => Type::string(), // Assuming gallery is stored as a JSON string
                     'attributes' => [
                         'type' => Type::listOf($attributeType),
                         'resolve' => function($product, $args, $context) use ($db) {
@@ -77,6 +79,7 @@ class GraphQL {
                 ],
             ]);
 
+            // Define the Query type
             $queryType = new ObjectType([
                 'name' => 'Query',
                 'fields' => [
@@ -99,6 +102,7 @@ class GraphQL {
                 ],
             ]);
 
+            // Define the Mutation type
             $mutationType = new ObjectType([
                 'name' => 'Mutation',
                 'fields' => [
@@ -115,12 +119,14 @@ class GraphQL {
                 ],
             ]);
 
+            // Create the schema
             $schema = new Schema(
                 (new SchemaConfig())
                 ->setQuery($queryType)
                 ->setMutation($mutationType)
             );
 
+            // Parse the incoming request
             $rawInput = file_get_contents('php://input');
             if ($rawInput === false) {
                 throw new RuntimeException('Failed to get php://input');
@@ -130,9 +136,11 @@ class GraphQL {
             $query = $input['query'];
             $variableValues = $input['variables'] ?? null;
 
+            // Execute the query
             $result = GraphQLBase::executeQuery($schema, $query, null, null, $variableValues);
             $output = $result->toArray();
         } catch (Throwable $e) {
+            error_log($e->getMessage()); // Log the error message
             $output = [
                 'error' => [
                     'message' => $e->getMessage(),

@@ -13,4 +13,11 @@ class Category extends Model {
         $stmt->execute();
         return $stmt;
     }
+
+    public function create($name) {
+        $query = "INSERT INTO " . $this->table_name . " (name) VALUES (:name)";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':name', $name);
+        return $stmt->execute();
+    }
 }

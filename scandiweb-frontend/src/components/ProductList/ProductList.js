@@ -1,6 +1,6 @@
 import React from "react";
 import { gql, useQuery } from "@apollo/client";
-import ProductCard from "./ProductCard";
+import ProductCard from "../ProductCard/ProductCard";
 import "./ProductList.css";
 
 const GET_PRODUCTS = gql`
@@ -27,8 +27,6 @@ const ProductList = () => {
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
-
-  console.log("Products data:", data.products); // Log the data to inspect it
 
   return (
     <div className="product-list">
